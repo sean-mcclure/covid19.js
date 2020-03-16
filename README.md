@@ -210,7 +210,7 @@ The **covid19.js** library can be used to fetch daily updated data from the COVI
 ### get_country_from_state
 #### parameters
  - @param {string} **state** (choose *state*)
- -
+
 #### returns
  - @returns {string} (name of country associated with state)
 
