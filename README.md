@@ -2,6 +2,11 @@
 
 The **covid19.js** library can be used to fetch daily updated data from the COVID Data [Repository](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE**. The library provides a set of useful functions for fetching both daily report and time series data since recording started.
 
+## Include in Your Project
+```markup
+<script src="covid19.min.js"></script>
+```
+
 ## Methods with Examples
 
 ### get_all_countries
