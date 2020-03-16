@@ -1,7 +1,12 @@
+/*! covid19.js v1.1.1 | (c) Created by Sean McClure - MIT License */
+//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 covid = {
     "hold_value": hold_value = {},
     "hold_value.corona_dates" : hold_value.corona_dates = [],
     "hold_value.delay_cnt" : hold_value.delay_cnt = -1,
+    "hold_value.date_cnt" : hold_value.date_cnt = 0,
     "dedupe_array": function dedupe_array(arr) {
         new_arr = arr.filter(function(item, pos) {
             return arr.indexOf(item) == pos;
@@ -182,6 +187,8 @@ covid = {
     },
     "get_data_dates": function get_data_dates(data) {
         var temp_dates = covid.remove_from_array(covid.get_everything_after(data.split('\n')[0], "Long").split(","), "")
+        hold_value.date_cnt++
+        if(hold_value.date_cnt === 1) {
         temp_dates.forEach(function(elem) {
             var pieces = elem.split("/")
             if (pieces[0].length < 2) {
@@ -197,6 +204,7 @@ covid = {
             var new_year = pieces[2].replace("20", "2020")
             covid.hold_value.corona_dates.push(new_month.trim() + "-" + new_day.trim() + "-" + new_year.trim())
         })
+        }
     },
     "get_report_by_country_and_state": function get_report_by_country_and_state(date, country, state) {
         var res = {}
@@ -368,5 +376,11 @@ covid.call_once_satisfied({
                 covid.fetch_corona_reports(covid.hold_value.corona_dates[covid.hold_value.delay_cnt].trim())
             }
         })
+    }
+})
+covid.call_once_satisfied({
+    "condition": "Object.keys(covid.fetch_results_reports).length === covid.hold_value.corona_dates.length",
+    "function" : function() {
+        console.log("All data loaded. Everything ready!")
     }
 })

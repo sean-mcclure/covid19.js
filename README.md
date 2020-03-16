@@ -19,6 +19,19 @@ The **covid19.js** library can be used to fetch daily updated data from the COVI
 #### example
     covid.get_all_countries("deaths")
 
+#### output
+     [
+         "Thailand",
+         "Japan",
+         "Singapore",
+         "Nepal",
+         "Malaysia",
+         "Canada",
+         "Australia",
+         "Cambodia"
+         ...
+    ]
+
 ### get_all_country_states
 #### parameters
  - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
@@ -29,6 +42,18 @@ The **covid19.js** library can be used to fetch daily updated data from the COVI
 
 #### example
     covid.get_all_country_states("deaths", "US")
+
+#### output
+    [
+        "Washington",
+        "New York",
+        "California",
+        "Massachusetts",
+        "Diamond Princess",
+        "Grand Princess",
+        "Georgia"
+        ...
+    ]
 
 ### check_if_country_has_state
 #### parameters
@@ -51,6 +76,20 @@ The **covid19.js** library can be used to fetch daily updated data from the COVI
 
 #### example
     covid.find_time_series_with_state("recovered", "California", "US")
+
+#### output
+
+    [
+        ...
+        {index:  47,  value:  0,  true_date:  "3/8/20"}
+        {index:  48,  value:  0,  true_date:  "3/9/20"}
+        {index:  49,  value:  2,  true_date:  "3/10/20"}
+        {index:  50,  value:  2,  true_date:  "3/11/20"}
+        {index:  51,  value:  6,  true_date:  "3/12/20"}
+        {index:  52,  value:  6,  true_date:  "3/13/20"}
+        {index:  53,  value:  6,  true_date:  "3/14/20"}
+        {index:  54,  value:  6,  true_date:  "3/15/20"}
+    ]
 
 ### get_report_by_country_and_state
 #### parameters
