@@ -95,7 +95,7 @@ covid = {
         return (res)
     },
     "clean_commas_from_countries": function clean_commas_from_countries(data) {
-        var res = data.split("Korea, South").join("Korea South")
+        var res = data.split("Korea, South").join("Korea South").split("Bahamas, The").join("Bahamas").split("Gambia, The").join("Gambia")
         return (res)
     },
     "convert_fetched_csv_to_json": function convert_fetched_csv_to_json(data) {
@@ -222,14 +222,14 @@ covid = {
     "get_global_report": function get_global_report(choice) {
         // since cumulative, only need most recent report
         var use_choice = choice.charAt(0).toUpperCase() + choice.slice(1)
-        var global_deaths = []
+        var global_res = []
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
-                global_deaths.push(Number(elem[use_choice]))
+                global_res.push(Number(elem[use_choice]))
             }
         })
-        return (global_deaths.reduce((a, b) => a + b, 0))
+        return (global_res.reduce((a, b) => a + b, 0))
     },
     "order_totals_by_country": function order_totals_by_country(choice) {
         // since cumulative, only need most recent report
@@ -381,8 +381,10 @@ covid.call_once_satisfied({
     }
 })
 covid.call_once_satisfied({
-    "condition": "Object.keys(covid.fetch_results_reports).length === covid.hold_value.corona_dates.length",
+    "condition": "Object.keys(covid.fetch_results_reports).length > 0 && Object.keys(covid.fetch_results_reports).length === covid.hold_value.corona_dates.length",
     "function" : function() {
+        covid.hold_value.loaded_state = true
         console.log("All data loaded. Everything ready!")
     }
 })
+covid.hold_value.loaded_state = false
