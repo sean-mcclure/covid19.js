@@ -108,7 +108,9 @@ covid = {
                 header_elems = elem.split(",")
             } else {
                 elem.split(",").forEach(function(data_point, j) {
-                    inner[header_elems[j].trim()] = data_point
+                    if(typeof(header_elems[j]) !== "undefined") {
+                        inner[header_elems[j].trim()] = data_point
+                    }
                 })
                 res.push(inner)
             }
