@@ -7,6 +7,20 @@ The **covid19.js** library can be used to fetch daily updated data from the COVI
 <script src="covid19.min.js"></script>
 ```
 
+## Ready State
+
+covid19.js takes a few seconds on load to fetch all necessary data. When the browser console shows:
+
+    All data loaded. Everything ready!
+
+...all data has been loaded and covid19 functions are ready to use. Your application can check the ready status by confirming the global state variable is true:
+
+    covid.hold_value.loaded_state
+
+#### output
+
+    true
+
 ## Methods with Examples
 
 ### get_all_countries
