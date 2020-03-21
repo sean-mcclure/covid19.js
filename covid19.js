@@ -4,9 +4,9 @@
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 covid = {
     "hold_value": hold_value = {},
-    "hold_value.corona_dates" : hold_value.corona_dates = [],
-    "hold_value.delay_cnt" : hold_value.delay_cnt = -1,
-    "hold_value.date_cnt" : hold_value.date_cnt = 0,
+    "hold_value.corona_dates": hold_value.corona_dates = [],
+    "hold_value.delay_cnt": hold_value.delay_cnt = -1,
+    "hold_value.date_cnt": hold_value.date_cnt = 0,
     "dedupe_array": function dedupe_array(arr) {
         new_arr = arr.filter(function(item, pos) {
             return arr.indexOf(item) == pos;
@@ -58,6 +58,7 @@ covid = {
     },
     "delay_multiple": function delay_multiple(options) {
         var index = 0;
+
         function delayed_loop() {
             setTimeout(function() {
                 if (typeof(options.function) == 'function') {
@@ -108,7 +109,7 @@ covid = {
                 header_elems = elem.split(",")
             } else {
                 elem.split(",").forEach(function(data_point, j) {
-                    if(typeof(header_elems[j]) !== "undefined") {
+                    if (typeof(header_elems[j]) !== "undefined") {
                         inner[header_elems[j].trim()] = data_point
                     }
                 })
@@ -187,25 +188,35 @@ covid = {
         })
         return (res)
     },
+    "find_time_series_with_country": function find_time_series_with_country(choice, country) {
+        var res = {}
+        covid.fetch_results[choice].forEach(function(elem) {
+            if (elem[1] === country) {
+                var res_temp = covid.remove_from_array(elem, "")
+                res[elem[1]] = covid.remove_from_array(res_temp, country)
+            }
+        })
+        return (res)
+    },
     "get_data_dates": function get_data_dates(data) {
         var temp_dates = covid.remove_from_array(covid.get_everything_after(data.split('\n')[0], "Long").split(","), "")
         hold_value.date_cnt++
-        if(hold_value.date_cnt === 1) {
-        temp_dates.forEach(function(elem) {
-            var pieces = elem.split("/")
-            if (pieces[0].length < 2) {
-                var new_month = "0" + pieces[0]
-            } else {
-                var new_month = pieces[0]
-            }
-            if (pieces[1].length < 2) {
-                var new_day = "0" + pieces[1]
-            } else {
-                var new_day = pieces[1]
-            }
-            var new_year = pieces[2].replace("20", "2020")
-            covid.hold_value.corona_dates.push(new_month.trim() + "-" + new_day.trim() + "-" + new_year.trim())
-        })
+        if (hold_value.date_cnt === 1) {
+            temp_dates.forEach(function(elem) {
+                var pieces = elem.split("/")
+                if (pieces[0].length < 2) {
+                    var new_month = "0" + pieces[0]
+                } else {
+                    var new_month = pieces[0]
+                }
+                if (pieces[1].length < 2) {
+                    var new_day = "0" + pieces[1]
+                } else {
+                    var new_day = pieces[1]
+                }
+                var new_year = pieces[2].replace("20", "2020")
+                covid.hold_value.corona_dates.push(new_month.trim() + "-" + new_day.trim() + "-" + new_year.trim())
+            })
         }
     },
     "get_report_by_country_and_state": function get_report_by_country_and_state(date, country, state) {
@@ -362,8 +373,9 @@ covid = {
         return (res)
     },
     "fetch_results": fetch_results = {},
-    "fetch_results_reports": fetch_results_reportss = {}
+    "fetch_results_reports": fetch_results_reports = {}
 }
+function fetch_all_data() {
 covid.fetch_corona_data("confirmed", {})
 covid.fetch_corona_data("deaths", {})
 covid.fetch_corona_data("recovered", {})
@@ -380,9 +392,11 @@ covid.call_once_satisfied({
         })
     }
 })
+}
+fetch_all_data()
 covid.call_once_satisfied({
     "condition": "Object.keys(covid.fetch_results_reports).length > 0 && Object.keys(covid.fetch_results_reports).length === covid.hold_value.corona_dates.length",
-    "function" : function() {
+    "function": function() {
         covid.hold_value.loaded_state = true
         console.log("All data loaded. Everything ready!")
     }

@@ -105,6 +105,31 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
         {index:  54,  value:  6,  true_date:  "3/15/20"}
     ]
 
+### find_time_series_with_country
+#### parameters
+ - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
+ - @param {string} **country** (choose *country*)
+
+#### returns
+ - @returns {object} (time series object for chosen country)
+
+#### example
+    covid.find_time_series_with_country("recovered", "US")
+
+#### output
+
+    [
+        ...
+        {index:  47,  value:  0,  true_date:  "3/8/20"}
+        {index:  48,  value:  0,  true_date:  "3/9/20"}
+        {index:  49,  value:  2,  true_date:  "3/10/20"}
+        {index:  50,  value:  2,  true_date:  "3/11/20"}
+        {index:  51,  value:  6,  true_date:  "3/12/20"}
+        {index:  52,  value:  6,  true_date:  "3/13/20"}
+        {index:  53,  value:  6,  true_date:  "3/14/20"}
+        {index:  54,  value:  6,  true_date:  "3/15/20"}
+    ]
+
 ### get_report_by_country_and_state
 #### parameters
  - @param {string} **date** (choose report *date*)
