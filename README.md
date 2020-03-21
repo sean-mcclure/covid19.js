@@ -7,6 +7,11 @@ The **covid19.js** library can be used to fetch daily updated data from the COVI
 <script src="covid19.min.js"></script>
 ```
 
+### CDN
+```markup
+<script src='https://collaboratescience.com/covid19/covid19.min.js'></script>
+```
+
 ## Ready State
 
 covid19.js takes a few seconds on load to fetch all necessary data. When the browser console shows:
