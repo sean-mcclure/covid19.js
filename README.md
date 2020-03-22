@@ -26,7 +26,7 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
     true
 
-## MMETHODS & EXAMPLES
+## METHODS & EXAMPLES
 
 ## Reported Data
 
@@ -244,6 +244,9 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
 #### example
     covid.check_if_country_has_state("Italy")
+
+#### output
+    false
 
 ### get_available_dates
 
