@@ -219,6 +219,9 @@ covid = {
             })
         }
     },
+    "get_available_dates" : function get_available_dates() {
+        return(covid.hold_value.corona_dates)
+    },
     "get_report_by_country_and_state": function get_report_by_country_and_state(date, country, state) {
         var res = {}
         covid.fetch_results_reports[date].forEach(function(elem) {

@@ -84,6 +84,22 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 #### example
     covid.check_if_country_has_state("Italy")
 
+### get_available_dates
+
+#### returns
+ - @returns {array} (all available dates in JHU CSSE data)
+
+#### example
+    covid.get_available_dates()
+
+#### output
+
+    [
+        01-22-2020",
+        "01-23-2020",
+        "01-24-2020"
+    ]
+
 ### find_time_series_with_state
 #### parameters
  - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
