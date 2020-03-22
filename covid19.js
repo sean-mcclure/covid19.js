@@ -245,6 +245,20 @@ covid = {
         })
         return (global_res.reduce((a, b) => a + b, 0))
     },
+    "get_country_report" : function get_country_report(country) {
+        var res = {}
+        res.deaths = covid.sort_totals_by_country("deaths")[country]
+        res.confirmed = covid.sort_totals_by_country("confirmed")[country]
+        res.recovered = covid.sort_totals_by_country("recovered")[country]
+        return(res)
+    },
+    "get_state_report" : function get_state_report(state) {
+        var res = {}
+        res.deaths = covid.sort_totals_by_state("deaths")[state]
+        res.confirmed = covid.sort_totals_by_state("confirmed")[state]
+        res.recovered = covid.sort_totals_by_state("recovered")[state]
+        return(res)
+    },
     "order_totals_by_country": function order_totals_by_country(choice) {
         // since cumulative, only need most recent report
         var use_choice = choice.charAt(0).toUpperCase() + choice.slice(1)

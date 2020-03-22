@@ -57,7 +57,7 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
  -  @param {string} **country** (choose *country*)
 
 #### returns
- - @returns {array} (all countries associated with chosen country)
+ - @returns {array} (all states associated with chosen country)
 
 #### example
     covid.get_all_country_states("deaths", "US")
@@ -186,6 +186,34 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 #### output
 
     76034
+
+### get_country_report
+#### parameters
+ - @param {string} **country** (choose *country*)
+
+#### returns
+ - @returns {object} (summary object with country total *deaths*, *confirmed*, *recovered*)
+
+#### example
+    covid.get_country_report("Italy")
+
+#### output
+
+    {deaths: 4825, confirmed: 53578, recovered: 6072}
+
+### get_state_report
+#### parameters
+ - @param {string} **state** (choose *state*)
+
+#### returns
+ - @returns {object} (summary object with state total *deaths*, *confirmed*, *recovered*)
+
+#### example
+    covid.get_state_report("California")
+
+#### output
+
+    {deaths: 24, confirmed: 1364, recovered: 0}
 
 ### sort_totals_by_country
 #### parameters
