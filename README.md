@@ -287,5 +287,33 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
     "Denmark"
 
+### find_code_by_country
+#### parameters
+ - @param {string} **country** (choose *country*)
+
+#### returns
+ - @returns {string} (name of country associated with code)
+
+#### example
+    covid.find_code_by_country("Dominican")
+
+#### output
+
+    "DO"
+
+### find_country_by_code
+#### parameters
+ - @param {string} **code** (choose *code*)
+
+#### returns
+ - @returns {string} (country code associated with country)
+
+#### example
+    covid.find_country_by_code("DO")
+
+#### output
+
+    "Dominican Republic"
+
 ## Support
 Reach out to [Sean McClure](https://twitter.com/sean_a_mcclure) if you need assistance or would like to see additional useful functions added to this library.
