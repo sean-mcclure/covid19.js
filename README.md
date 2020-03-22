@@ -95,9 +95,15 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 #### output
 
     [
-        01-22-2020",
-        "01-23-2020",
-        "01-24-2020"
+        ...
+        "03-12-2020",
+        "03-13-2020",
+        "03-14-2020",
+        "03-15-2020",
+        "03-16-2020",
+        "03-17-2020",
+        "03-18-2020",
+        "03-19-2020"
     ]
 
 ### find_time_series_with_state
