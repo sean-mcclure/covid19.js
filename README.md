@@ -185,6 +185,54 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
         {index:  54,  value:  6,  true_date:  "3/15/20"}
     ]
 
+### get_new_cases_per_day_country
+#### parameters
+ - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
+ - @param {string} **country** (choose a *country* that has no states (use covid.check_if_country_has_state(*country*) to confirm))
+
+#### returns
+ - @returns {object} (summary object with daily new cases for chosen country)
+
+#### example
+    covid.get_new_cases_per_day_country("confirmed", "Japan")
+
+#### output
+
+    [
+        {date: "1/22/20", new_cases: 2}
+        {date: "1/23/20", new_cases: -1}
+        {date: "1/24/20", new_cases: 1}
+        {date: "1/25/20", new_cases: 0}
+        {date: "1/26/20", new_cases: 2}
+        {date: "1/27/20", new_cases: 0}
+        {date: "1/28/20", new_cases: 3}
+        ...
+    ]
+
+### get_new_cases_per_day_state
+#### parameters
+ - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
+ - @param {string} **state** (choose *state*)
+ - @param {string} **country** (choose a *country*)
+
+#### returns
+ - @returns {object} (summary object with daily new cases for chosen state)
+
+#### example
+    covid.get_new_cases_per_day_state("confirmed", "Gibralter", "United Kingdom")
+
+#### output
+
+    [
+        ...
+        {date: "3/17/20", new_cases: 2}
+        {date: "3/18/20", new_cases: 5}
+        {date: "3/19/20", new_cases: 2}
+        {date: "3/20/20", new_cases: 0}
+        {date: "3/21/20", new_cases: 0}
+        {date: "3/22/20", new_cases: 5}
+    ]
+
 ## Utility Methods
 
 ### get_all_countries
