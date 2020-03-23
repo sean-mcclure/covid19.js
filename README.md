@@ -31,18 +31,16 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 ## Reported Data
 
 ### get_global_report
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
 
 #### returns
  - @returns {object} (summary object with global total *deaths*, *confirmed*, *recovered*)
 
 #### example
-    covid.get_global_report("recovered")
+    covid.get_global_report()
 
 #### output
 
-    76034
+    {Deaths: 14634, Confirmed: 350591, Recovered: 448473}
 
 ### get_country_report
 #### parameters

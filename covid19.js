@@ -233,17 +233,21 @@ covid = {
         })
         return (res)
     },
-    "get_global_report": function get_global_report(choice) {
+    "get_global_report": function get_global_report() {
         // since cumulative, only need most recent report
-        var use_choice = choice.charAt(0).toUpperCase() + choice.slice(1)
+        var use_choices = ["Deaths", "Confirmed", "Recovered"]
+        var totals = {}
         var global_res = []
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
+        use_choices.forEach(function(choice) {
         most_recent_report.forEach(function(elem) {
-            if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
-                global_res.push(Number(elem[use_choice]))
+            if (elem[choice] !== "" && typeof(elem[choice]) !== 'undefined') {
+                global_res.push(Number(elem[choice]))
             }
         })
-        return (global_res.reduce((a, b) => a + b, 0))
+        totals[choice] = global_res.reduce((a, b) => a + b, 0)
+        })
+        return (totals)
     },
     "get_country_report" : function get_country_report(country) {
         var res = {}
