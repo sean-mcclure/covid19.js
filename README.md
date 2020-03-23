@@ -163,13 +163,13 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 ### find_time_series_with_country
 #### parameters
  - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
- - @param {string} **country** (choose *country*)
+ - @param {string} **country** (choose a *country* that has no states (use covid.check_if_country_has_state(*country*) to confirm))
 
 #### returns
  - @returns {object} (time series object for chosen country)
 
 #### example
-    covid.find_time_series_with_country("recovered", "US")
+    covid.find_time_series_with_country("recovered", "Japan")
 
 #### output
 

@@ -189,13 +189,17 @@ covid = {
         return (res)
     },
     "find_time_series_with_country": function find_time_series_with_country(choice, country) {
-        var res = {}
-        covid.fetch_results[choice].forEach(function(elem) {
-            if (elem[1] === country) {
-                var res_temp = covid.remove_from_array(elem, "")
-                res[elem[1]] = covid.remove_from_array(res_temp, country)
+        if(covid.check_if_country_has_state(country)) {
+            var res = "This country has at least one state. Use covid.find_time_series_with_state() instead."
+        } else {
+            var res = {}
+            covid.fetch_results[choice].forEach(function(elem) {
+                if (elem[1] === country) {
+                    var res_temp = covid.remove_from_array(elem, "")
+                    res[elem[1]] = covid.remove_from_array(res_temp, country)
+                }
+            })
             }
-        })
         return (res)
     },
     "get_data_dates": function get_data_dates(data) {
