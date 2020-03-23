@@ -245,7 +245,7 @@ covid = {
                 global_res.push(Number(elem[choice]))
             }
         })
-        totals[choice] = global_res.reduce((a, b) => a + b, 0)
+        totals[choice.toLowerCase()] = global_res.reduce((a, b) => a + b, 0)
         })
         return (totals)
     },

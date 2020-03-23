@@ -40,7 +40,7 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
 #### output
 
-    {Deaths: 14634, Confirmed: 350591, Recovered: 448473}
+    {deaths: 14634, confirmed: 350591, recovered: 448473}
 
 ### get_country_report
 #### parameters
