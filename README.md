@@ -377,6 +377,20 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
     "Dominican Republic"
 
+### check_if_location_in_data
+#### parameters
+ - @param {string} **location** (choose *location*)
+
+#### returns
+ - @returns {boolean} (true/false depending on whether location is in data)
+
+#### example
+    covid.check_if_location_in_data("Los Angeles")
+
+#### output
+
+    false
+
 ### get_longs_and_lats
 #### parameters
  - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)

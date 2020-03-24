@@ -283,21 +283,17 @@ covid = {
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
-                if(elem.hasOwnProperty("Province_State")) {
+                if (elem.hasOwnProperty("Province_State")) {
                     elem["Province/State"] = elem["Province_State"]
                 }
-                if(elem.hasOwnProperty("Country/Region")) {
+                if (elem.hasOwnProperty("Country_Region")) {
+                    elem["Country/Region"] = elem["Country_Region"]
+                }
+                if (elem.hasOwnProperty("Country/Region")) {
                     if (Object.keys(res).includes(elem["Country/Region"])) {
                         res[elem["Country/Region"]].push(Number(elem[use_choice]))
                     } else {
                         res[elem["Country/Region"]] = [Number(elem[use_choice])]
-                    }
-                }
-                if(elem.hasOwnProperty("Country_Region")) {
-                    if (Object.keys(res).includes(elem["Country_Region"])) {
-                        res[elem["Country_Region"]].push(Number(elem[use_choice]))
-                    } else {
-                        res[elem["Country_Region"]] = [Number(elem[use_choice])]
                     }
                 }
             }
@@ -311,7 +307,7 @@ covid = {
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
-                if(elem.hasOwnProperty("Province_State")) {
+                if (elem.hasOwnProperty("Province_State")) {
                     elem["Province/State"] = elem["Province_State"]
                 }
                 if (Object.keys(res).includes(elem["Province/State"]) || Object.keys(res).includes(elem["Province_State"])) {
@@ -402,10 +398,10 @@ covid = {
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
-                if(elem.hasOwnProperty("Province_State")) {
+                if (elem.hasOwnProperty("Province_State")) {
                     elem["Province/State"] = elem["Province_State"]
                 }
-                if(elem.hasOwnProperty("Province_State")) {
+                if (elem.hasOwnProperty("Province_State")) {
                     elem["Country/Region"] = elem["Country_Region"]
                 }
                 var inner = {}
@@ -450,28 +446,28 @@ covid = {
         return (res)
     },
     "get_new_cases_per_day_country": function get_new_cases_per_day_country(choice, country) {
-        if(covid.check_if_country_has_state(country)) {
+        if (covid.check_if_country_has_state(country)) {
             var res = "This country has at least one state. Use covid.get_new_cases_per_day_state() instead."
         } else {
-        var res = []
-        var values = []
-        var dates = []
-        covid.find_time_series_with_country(choice, country)[country].forEach(function(elem) {
-            dates.push(elem.true_date)
-            values.push(elem.value)
-        })
-        for (var i = 0; i < values.length; i++) {
-            var inner = {}
-            if (!isNaN(values[i - 1])) {
-                inner.date = dates[i]
-                inner.new_cases = values[i] - values[i - 1]
-                res.push(inner)
-            } else {
-                inner.date = dates[i]
-                inner.new_cases = values[i]
-                res.push(inner)
+            var res = []
+            var values = []
+            var dates = []
+            covid.find_time_series_with_country(choice, country)[country].forEach(function(elem) {
+                dates.push(elem.true_date)
+                values.push(elem.value)
+            })
+            for (var i = 0; i < values.length; i++) {
+                var inner = {}
+                if (!isNaN(values[i - 1])) {
+                    inner.date = dates[i]
+                    inner.new_cases = values[i] - values[i - 1]
+                    res.push(inner)
+                } else {
+                    inner.date = dates[i]
+                    inner.new_cases = values[i]
+                    res.push(inner)
+                }
             }
-        }
         }
         return (res)
     },
@@ -495,6 +491,24 @@ covid = {
                 res.push(inner)
             }
         }
+        return (res)
+    },
+    "check_if_location_in_data": function check_if_location_in_data(country_or_state) {
+        var res = false
+        covid.get_all_countries("deaths").forEach(function(elem) {
+            if(covid.check_if_country_has_state(elem)) {
+            var these_states = covid.get_all_country_states("deaths", elem)
+            if (these_states[0] !== "") {
+                if (these_states.includes(country_or_state)) {
+                    res = true
+                }
+            }
+            } else {
+                if(covid.get_all_countries("deaths").includes(country_or_state)) {
+                    res = true
+                }
+            }
+        })
         return (res)
     },
     "country_codes": country_codes = [{
