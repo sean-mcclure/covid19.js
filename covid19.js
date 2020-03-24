@@ -99,6 +99,15 @@ covid = {
         var res = data.split("Korea, South").join("Korea South").split("Bahamas, The").join("Bahamas").split("Gambia, The").join("Gambia")
         return (res)
     },
+    "remove_unoriginal_columns_from_json": function remove_unoriginal_columns_from_json(arr_of_objs) {
+        arr_of_objs.forEach(function(json) {
+            delete json["FIPS"]
+            delete json["Admin2"]
+            delete json["Active"]
+            delete json["Combined_Key"]
+        })
+        return (arr_of_objs)
+    },
     "convert_fetched_csv_to_json": function convert_fetched_csv_to_json(data) {
         var cleaned_countries = covid.clean_commas_from_countries(data)
         var use_data = covid.clean_first_commas_from_states(cleaned_countries)
@@ -274,10 +283,22 @@ covid = {
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
-                if (Object.keys(res).includes(elem["Country/Region"])) {
-                    res[elem["Country/Region"]].push(Number(elem[use_choice]))
-                } else {
-                    res[elem["Country/Region"]] = [Number(elem[use_choice])]
+                if(elem.hasOwnProperty("Province_State")) {
+                    elem["Province/State"] = elem["Province_State"]
+                }
+                if(elem.hasOwnProperty("Country/Region")) {
+                    if (Object.keys(res).includes(elem["Country/Region"])) {
+                        res[elem["Country/Region"]].push(Number(elem[use_choice]))
+                    } else {
+                        res[elem["Country/Region"]] = [Number(elem[use_choice])]
+                    }
+                }
+                if(elem.hasOwnProperty("Country_Region")) {
+                    if (Object.keys(res).includes(elem["Country_Region"])) {
+                        res[elem["Country_Region"]].push(Number(elem[use_choice]))
+                    } else {
+                        res[elem["Country_Region"]] = [Number(elem[use_choice])]
+                    }
                 }
             }
         })
@@ -290,7 +311,10 @@ covid = {
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
-                if (Object.keys(res).includes(elem["Province/State"])) {
+                if(elem.hasOwnProperty("Province_State")) {
+                    elem["Province/State"] = elem["Province_State"]
+                }
+                if (Object.keys(res).includes(elem["Province/State"]) || Object.keys(res).includes(elem["Province_State"])) {
                     if (elem["Province/State"] === "") {
                         elem["Province/State"] = elem["Country/Region"]
                         res[elem["Province/State"]].push(Number(elem[use_choice]))
@@ -367,7 +391,9 @@ covid = {
     "fetch_corona_reports": function fetch_corona_reports(date) {
         var url = urls.daily_reports.replace("XX-XX-XXXX", date)
         fetch(url).then(response => response.text()).then(data => {
-            covid.fetch_results_reports[date] = covid.convert_fetched_csv_to_json(data)
+            var temp_json = covid.convert_fetched_csv_to_json(data)
+            var res = covid.remove_unoriginal_columns_from_json(temp_json)
+            covid.fetch_results_reports[date] = res
         });
     },
     "get_states_and_countries": function get_states_and_countries() {
@@ -376,6 +402,12 @@ covid = {
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
+                if(elem.hasOwnProperty("Province_State")) {
+                    elem["Province/State"] = elem["Province_State"]
+                }
+                if(elem.hasOwnProperty("Province_State")) {
+                    elem["Country/Region"] = elem["Country_Region"]
+                }
                 var inner = {}
                 inner.country = elem["Country/Region"]
                 inner.state = elem["Province/State"]
