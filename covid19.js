@@ -74,6 +74,14 @@ covid = {
         }
         delayed_loop();
     },
+    "cap_first_letter": function cap_first_letter(str) {
+        var res = []
+        var strs = str.split(" ")
+        strs.forEach(function(elem) {
+            res.push(elem.charAt(0).toUpperCase() + elem.substring(1))
+        })
+        return (res.join(" "))
+    },
     "urls": urls = {
         "time_series_confirmed": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv",
         "time_series_deaths": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv",
@@ -439,7 +447,22 @@ covid = {
     "find_code_by_country": function find_code_by_country(search_country) {
         var res = false
         covid.country_codes.forEach(function(elem) {
-            if (elem.Country.includes(search_country)) {
+            if (elem.Country.includes(covid.cap_first_letter(search_country))) {
+                res = elem.country_code
+            }
+        })
+        return (res)
+    },
+    "find_code_by_state": function find_code_by_state(search_state) {
+        var res = false
+        var country = covid.get_country_from_state(covid.cap_first_letter(search_state))
+        if (country === "US") {
+            var use_country = "United States"
+        } else {
+            var use_country = country
+        }
+        covid.country_codes.forEach(function(elem) {
+            if (elem.Country.includes(use_country)) {
                 res = elem.country_code
             }
         })
@@ -496,15 +519,15 @@ covid = {
     "check_if_location_in_data": function check_if_location_in_data(country_or_state) {
         var res = false
         covid.get_all_countries("deaths").forEach(function(elem) {
-            if(covid.check_if_country_has_state(elem)) {
-            var these_states = covid.get_all_country_states("deaths", elem)
-            if (these_states[0] !== "") {
-                if (these_states.includes(country_or_state)) {
-                    res = true
+            if (covid.check_if_country_has_state(elem)) {
+                var these_states = covid.get_all_country_states("deaths", elem)
+                if (these_states[0] !== "") {
+                    if (these_states.includes(country_or_state)) {
+                        res = true
+                    }
                 }
-            }
             } else {
-                if(covid.get_all_countries("deaths").includes(country_or_state)) {
+                if (covid.get_all_countries("deaths").includes(country_or_state)) {
                     res = true
                 }
             }

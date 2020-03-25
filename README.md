@@ -354,7 +354,7 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
  - @param {string} **country** (choose *country*)
 
 #### returns
- - @returns {string} (name of country associated with code)
+ - @returns {string} (country code associated with country)
 
 #### example
     covid.find_code_by_country("Dominican")
@@ -362,6 +362,20 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 #### output
 
     "DO"
+
+### find_code_by_state
+#### parameters
+ - @param {string} **state** (choose *state*)
+
+#### returns
+ - @returns {string} (country code associated with state)
+
+#### example
+    covid.find_code_by_state("Gibraltar")
+
+#### output
+
+    "GB"
 
 ### find_country_by_code
 #### parameters
