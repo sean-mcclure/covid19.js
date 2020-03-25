@@ -451,4 +451,4 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 Reach out to [Sean McClure](https://twitter.com/sean_a_mcclure) if you need assistance or would like to see additional useful functions added to this library.
 
 ## Data Issues
-Unfortunately the [data source](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE** undergoes constant revisions to its formatting (column names, state formats, etc.). These [issues](https://github.com/CSSEGISandData/COVID-19/issues) are well documented by others. If you encounter an issue with the consistency of results returned by the methods in this library this is likely the cause. Please raise an issue on this repo for support.
+Unfortunately the [data source](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE** undergoes constant [revisions](https://github.com/CSSEGISandData/COVID-19/issues) to its formatting (column names, state formats, etc.). This library does its best to stay on top of these changes. If you encounter an issue with the consistency of results returned by the methods in this library please raise an issue on this repo.

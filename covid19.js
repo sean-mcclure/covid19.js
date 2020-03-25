@@ -403,6 +403,7 @@ covid = {
     "get_states_and_countries": function get_states_and_countries() {
         var use_choice = "Deaths"
         var res = []
+        var states_already = []
         var most_recent_report = covid.fetch_results_reports[covid.hold_value.corona_dates[covid.hold_value.corona_dates.length - 1].trim()]
         most_recent_report.forEach(function(elem) {
             if (elem[use_choice] !== "" && typeof(elem[use_choice]) !== 'undefined') {
@@ -413,9 +414,12 @@ covid = {
                     elem["Country/Region"] = elem["Country_Region"]
                 }
                 var inner = {}
+                if(!states_already.includes(elem["Province/State"])) {
                 inner.country = elem["Country/Region"]
                 inner.state = elem["Province/State"]
+                states_already.push(elem["Province/State"])
                 res.push(inner)
+                }
             }
         })
         return (res)
