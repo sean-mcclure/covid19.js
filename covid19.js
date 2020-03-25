@@ -433,6 +433,16 @@ covid = {
         })
         return (res)
     },
+    "get_states_from_country": function get_states_from_country(country) {
+        var res = []
+        var states_and_countries = covid.get_states_and_countries()
+        states_and_countries.forEach(function(elem) {
+            if (elem["country"] === country) {
+                res.push(elem["state"])
+            }
+        })
+        return (res)
+    },
     "fetch_results": fetch_results = {},
     "fetch_results_reports": fetch_results_reports = {},
     "find_country_by_code": function find_country_by_code(search_code) {

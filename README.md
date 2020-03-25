@@ -349,6 +349,29 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
     "Denmark"
 
+### get_states_from_country
+#### parameters
+ - @param {string} **country** (choose *country*)
+
+#### returns
+ - @returns {array} (all states/provinces associated with country)
+
+#### example
+    covid.get_states_from_country("Canada")
+
+#### output
+
+    [
+        "Alberta",
+        "British Columbia",
+        "Diamond Princess",
+        "Manitoba",
+        "New Brunswick",
+        "Newfoundland and Labrador",
+        "Nova Scotia"
+        ...
+    ]
+
 ### find_code_by_country
 #### parameters
  - @param {string} **country** (choose *country*)
