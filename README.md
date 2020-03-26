@@ -29,11 +29,11 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 ## CORE OBJECTS
 
 #### fetch results
-##### **time series** for every Country/Region and Province/State
+##### time series for every Country/Region and Province/State
     covid.fetch_results
 
 #### fetch results
-##### **daily reports** for every Country/Region and Province/State
+##### daily reports for every Country/Region and Province/State
     covid.fetch_results_reports
 
 ## METHODS & EXAMPLES
