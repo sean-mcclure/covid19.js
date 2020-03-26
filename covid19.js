@@ -83,9 +83,9 @@ covid = {
         return (res.join(" "))
     },
     "urls": urls = {
-        "time_series_confirmed": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv",
-        "time_series_deaths": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv",
-        "time_series_recovered": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv",
+        "time_series_confirmed": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", //time_series_19-covid-Confirmed.csv",
+        "time_series_deaths": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", //time_series_19-covid-Deaths.csv",
+        "time_series_recovered": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv", //time_series_19-covid-Recovered.csv",
         "daily_reports": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/XX-XX-XXXX.csv"
     },
     "clean_first_commas_from_states": function clean_first_commas_from_states(data) {
@@ -173,17 +173,17 @@ covid = {
         })
         return (covid.dedupe_array(res))
     },
-    "get_all_country_states": function get_all_country_states(choice, country) {
+    "get_all_country_states": function get_all_country_states(country) {
         var res = []
-        covid.fetch_results[choice].forEach(function(elem, i) {
-            if (elem[1] === country) {
-                res.push(elem[0])
+        covid.get_states_and_countries().forEach(function(elem, i) {
+            if (elem["country"] === country) {
+                res.push(elem["state"])
             }
         })
         return (res)
     },
     "check_if_country_has_state": function check_if_country_has_state(country) {
-        var check = covid.get_all_country_states("deaths", country)
+        var check = covid.get_all_country_states(country)
         if (check.length === 0 || check[0] === "") {
             var res = false
         } else {
@@ -534,7 +534,7 @@ covid = {
         var res = false
         covid.get_all_countries("deaths").forEach(function(elem) {
             if (covid.check_if_country_has_state(elem)) {
-                var these_states = covid.get_all_country_states("deaths", elem)
+                var these_states = covid.get_all_country_states(elem)
                 if (these_states[0] !== "") {
                     if (these_states.includes(country_or_state)) {
                         res = true

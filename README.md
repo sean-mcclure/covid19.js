@@ -26,6 +26,14 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
     true
 
+## CORE OBJECTS
+
+### fetch results (*time series* for every Country/Region and Province/State (except US))
+    covid.fetch_results
+
+### fetch results (*daily reports* for every Country/Region and Province/State)
+    covid.fetch_results_reports
+
 ## METHODS & EXAMPLES
 
 ## Reported Data
@@ -260,14 +268,13 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
 ### get_all_country_states
 #### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
  -  @param {string} **country** (choose *country*)
 
 #### returns
  - @returns {array} (all states associated with chosen country)
 
 #### example
-    covid.get_all_country_states("deaths", "US")
+    covid.get_all_country_states("US")
 
 #### output
     [
