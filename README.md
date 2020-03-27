@@ -1,6 +1,6 @@
 # covid19.js
 
-The **covid19.js** library can be used to fetch daily updated data from the COVID Data [Repository](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE**. The library provides a set of useful functions for fetching both daily report and time series data since recording started.
+The **covid19.js** library can be used to create JS applications related to Corona Virus. Data comes from the [repository](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE**. This library ingests the data from coviddata/covid-api[https://github.com/coviddata/covid-api] repository.
 
 ## Include in Your Project
 ```markup
@@ -12,30 +12,6 @@ The **covid19.js** library can be used to fetch daily updated data from the COVI
 <script src='https://collaboratescience.com/covid19/covid19.min.js'></script>
 ```
 
-## Ready State
-
-covid19.js takes a few seconds on load to fetch all necessary data. When the browser console shows:
-
-    All data loaded. Everything ready!
-
-...all data has been loaded and covid19 functions are ready to use. Your application can check the ready status by confirming the global state variable is true:
-
-    covid.hold_value.loaded_state
-
-#### output
-
-    true
-
-## CORE OBJECTS
-
-#### fetch results
-##### time series for every Country/Region and Province/State
-    covid.fetch_results
-
-#### fetch_results_reports
-##### daily reports for every Country/Region and Province/State
-    covid.fetch_results_reports
-
 ## METHODS & EXAMPLES
 
 ## Reported Data
@@ -43,217 +19,62 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 ### get_global_report
 
 #### returns
- - @returns {object} (summary object with global total *deaths*, *confirmed*, *recovered*)
+ - @returns {object} (summary object with global total *cases*, *deaths*, *recoveries*)
 
 #### example
     covid.get_global_report()
 
 #### output
 
-    {deaths: 14634, confirmed: 350591, recovered: 448473}
+    {cases: 531574, deaths: 24016, recoveries: 123334}
 
-### get_country_report
+### get_location_report
 #### parameters
- - @param {string} **country** (choose *country*)
+ - @param {string} **location** (choose *location*)
 
 #### returns
- - @returns {object} (summary object with country total *deaths*, *confirmed*, *recovered*)
+ - @returns {object} (summary object with country total *cases*, *deaths*, *recoveries*)
 
 #### example
-    covid.get_country_report("Italy")
+    covid.get_location_report("Wyoming")
 
 #### output
 
-    {deaths: 4825, confirmed: 53578, recovered: 6072}
+    {cases: 53, deaths: 0, recoveries: 0}
 
-### get_state_report
+### get_time_series
 #### parameters
- - @param {string} **state** (choose *state*)
+ - @param {string} **category** (choose between *cumulative* and *new*)
+ - @param {string} **type** (choose between *cases*, *deaths*, and *recoveries*)
+ - @param {string} **country_or_region** (choose *country_or_region*)
 
 #### returns
- - @returns {object} (summary object with state total *deaths*, *confirmed*, *recovered*)
+ - @returns {object} (time series object for chosen location)
 
 #### example
-    covid.get_state_report("California")
-
-#### output
-
-    {deaths: 24, confirmed: 1364, recovered: 0}
-
-### get_report_by_country_and_state
-#### parameters
- - @param {string} **date** (choose report *date*)
- - @param {string} **country** (choose *country*)
- - @param {string} **state** (choose *state*)
-
-#### returns
- - @returns {object} (summary object with state total *deaths*, *confirmed*, *recovered*)
-
-#### example
-    covid.get_report_by_country_and_state("03-06-2020", "Canada", "British Columbia")
-
-#### output
-
-    {deaths: "0", confirmed: "21", recovered: "3"}
-
-### sort_totals_by_country
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
-
-#### returns
- - @returns {object} (sorted object by country with choice values)
-
-#### example
-    covid.sort_totals_by_country("recovered")
-
-#### output
-
-    {
-        China:  67017,
-        Iran:  4590,
-        Italy:  2335,
-        Spain:  517,
-        Korea South:  510,
-        Cruise Ship:  325,
-        Japan:  118,
-        Singapore:  105,
-        Bahrain:  60,
-        Germany:  46,
-    ...
-
-### sort_totals_by_state
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
-
-#### returns
- - @returns {object} (sorted object by states with choice values)
-
-#### example
-    covid.sort_totals_by_state("deaths")
-
-#### output
-
-    {
-        Hubei:  3085,
-        Italy:  1809,
-        Iran:  724,
-        Spain:  289,
-        France:  91,
-        Korea South:  75,
-        Washington:  40,
-        Henan:  22,
-    ...
-
-### find_time_series_with_state
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
- - @param {string} **state** (choose *state*)
- - @param {string} **country** (choose *country*)
-
-#### returns
- - @returns {object} (time series object for chosen state)
-
-#### example
-    covid.find_time_series_with_state("recovered", "California", "US")
+    covid.get_time_series("cumulative", "cases", "California")
 
 #### output
 
     [
         ...
-        {index:  47,  value:  0,  true_date:  "3/8/20"}
-        {index:  48,  value:  0,  true_date:  "3/9/20"}
-        {index:  49,  value:  2,  true_date:  "3/10/20"}
-        {index:  50,  value:  2,  true_date:  "3/11/20"}
-        {index:  51,  value:  6,  true_date:  "3/12/20"}
-        {index:  52,  value:  6,  true_date:  "3/13/20"}
-        {index:  53,  value:  6,  true_date:  "3/14/20"}
-        {index:  54,  value:  6,  true_date:  "3/15/20"}
-    ]
-
-### find_time_series_with_country
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
- - @param {string} **country** (choose a *country* that has no states (use covid.check_if_country_has_state(*country*) to confirm))
-
-#### returns
- - @returns {object} (time series object for chosen country)
-
-#### example
-    covid.find_time_series_with_country("recovered", "Japan")
-
-#### output
-
-    [
-        ...
-        {index:  47,  value:  0,  true_date:  "3/8/20"}
-        {index:  48,  value:  0,  true_date:  "3/9/20"}
-        {index:  49,  value:  2,  true_date:  "3/10/20"}
-        {index:  50,  value:  2,  true_date:  "3/11/20"}
-        {index:  51,  value:  6,  true_date:  "3/12/20"}
-        {index:  52,  value:  6,  true_date:  "3/13/20"}
-        {index:  53,  value:  6,  true_date:  "3/14/20"}
-        {index:  54,  value:  6,  true_date:  "3/15/20"}
-    ]
-
-### get_new_cases_per_day_country
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
- - @param {string} **country** (choose a *country* that has no states (use covid.check_if_country_has_state(*country*) to confirm))
-
-#### returns
- - @returns {object} (summary object with daily new cases for chosen country)
-
-#### example
-    covid.get_new_cases_per_day_country("confirmed", "Japan")
-
-#### output
-
-    [
-        {date: "1/22/20", new_cases: 2}
-        {date: "1/23/20", new_cases: -1}
-        {date: "1/24/20", new_cases: 1}
-        {date: "1/25/20", new_cases: 0}
-        {date: "1/26/20", new_cases: 2}
-        {date: "1/27/20", new_cases: 0}
-        {date: "1/28/20", new_cases: 3}
-        ...
-    ]
-
-### get_new_cases_per_day_state
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
- - @param {string} **state** (choose *state*)
- - @param {string} **country** (choose a *country*)
-
-#### returns
- - @returns {object} (summary object with daily new cases for chosen state)
-
-#### example
-    covid.get_new_cases_per_day_state("confirmed", "Gibralter", "United Kingdom")
-
-#### output
-
-    [
-        ...
-        {date: "3/17/20", new_cases: 2}
-        {date: "3/18/20", new_cases: 5}
-        {date: "3/19/20", new_cases: 2}
-        {date: "3/20/20", new_cases: 0}
-        {date: "3/21/20", new_cases: 0}
-        {date: "3/22/20", new_cases: 5}
+        {date: "2020-03-21", value: 1364},
+        {date: "2020-03-22", value: 1646},
+        {date: "2020-03-23", value: 2108},
+        {date: "2020-03-24", value: 2538},
+        {date: "2020-03-25", value: 2998},
+        {date: "2020-03-26", value: 3899}
     ]
 
 ## Utility Methods
 
 ### get_all_countries
-#### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
 
 #### returns
- - @returns {array} (all countries listed in COVID Data)
+ - @returns {array} (all countries listed in data)
 
 #### example
-    covid.get_all_countries("deaths")
+    covid.get_all_countries()
 
 #### output
      [
@@ -268,15 +89,13 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
          ...
     ]
 
-### get_all_country_states
-#### parameters
- -  @param {string} **country** (choose *country*)
+### get_all_regions
 
 #### returns
- - @returns {array} (all states associated with chosen country)
+ - @returns {array} (all regions listed in data)
 
 #### example
-    covid.get_all_country_states("US")
+    covid.get_all_regions()
 
 #### output
     [
@@ -290,15 +109,15 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
         ...
     ]
 
-### check_if_country_has_state
+### check_if_country_has_region
 #### parameters
  -  @param {string} **country** (choose *country*)
 
 #### returns
- - @returns {boolean} (true/false whether chosen country has associated states)
+ - @returns {boolean} (true/false whether chosen country has states)
 
 #### example
-    covid.check_if_country_has_state("Italy")
+    covid.check_if_country_has_region("Italy")
 
 #### output
     false
@@ -306,7 +125,7 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 ### get_available_dates
 
 #### returns
- - @returns {array} (all available dates in JHU CSSE data)
+ - @returns {array} (all available dates in data)
 
 #### example
     covid.get_available_dates()
@@ -325,48 +144,48 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
         "03-19-2020"
     ]
 
-### get_states_and_countries
+### get_countries_and_regions
 #### returns
- - @returns {array} (array of objects with all state and country pairs)
+ - @returns {array} (array of objects with all country and region pairs)
 
 #### example
-    covid.get_states_and_countries()
+    covid.get_countries_and_regions()
 
 #### output
 
       [
-           {country:  "China",  state:  "Hubei"}
-           {country:  "Italy",  state:  ""}
-           {country:  "Iran",  state:  ""}
-           {country:  ""Korea South"",  state:  ""}
-           {country:  "Spain",  state:  ""}
-           {country:  "Germany",  state:  ""}
-           {country:  "France",  state:  "France"}
-           ...
+          {country: "China", region: "Hubei"},
+          {country: "United States", region: "New York"},
+          {country: "France", region: "France"},
+          {country: "United States", region: "New Jersey"},
+          {country: "United Kingdom", region: "United Kingdom"},
+          {country: "United States", region: "California"}
+          ...
+      ]
 
-### get_country_from_state
+### get_country_from_region
 #### parameters
- - @param {string} **state** (choose *state*)
+ - @param {string} **region** (choose *region*)
 
 #### returns
- - @returns {string} (name of country associated with state)
+ - @returns {string} (name of country associated with region)
 
 #### example
-    covid.get_country_from_state("Faroe Islands")
+    covid.get_country_from_region("Faroe Islands")
 
 #### output
 
     "Denmark"
 
-### get_states_from_country
+### get_regions_from_country
 #### parameters
  - @param {string} **country** (choose *country*)
 
 #### returns
- - @returns {array} (all states/provinces associated with country)
+ - @returns {array} (all regions associated with country)
 
 #### example
-    covid.get_states_from_country("Canada")
+    covid.get_regions_from_country("Canada")
 
 #### output
 
@@ -395,33 +214,19 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
     "DO"
 
-### find_code_by_state
+### find_code_by_region
 #### parameters
- - @param {string} **state** (choose *state*)
+ - @param {string} **region** (choose *region*)
 
 #### returns
- - @returns {string} (country code associated with state)
+ - @returns {string} (country code associated with region)
 
 #### example
-    covid.find_code_by_state("Gibraltar")
+    covid.find_code_by_region("Gibraltar")
 
 #### output
 
     "GB"
-
-### find_country_by_code
-#### parameters
- - @param {string} **code** (choose *code*)
-
-#### returns
- - @returns {string} (country code associated with country)
-
-#### example
-    covid.find_country_by_code("DO")
-
-#### output
-
-    "Dominican Republic"
 
 ### check_if_location_in_data
 #### parameters
@@ -435,29 +240,50 @@ covid19.js takes a few seconds on load to fetch all necessary data. When the bro
 
 #### output
 
-    false
-
-### get_longs_and_lats
+### check_if_country
 #### parameters
- - @param {string} **choice** (choose between *deaths*, *confirmed*, *recovered*)
+ - @param {string} **country_or_region** (choose *country_or_region*)
 
 #### returns
- - @returns {array} (array of objects with longitudes and latitudes for every country/state)
+ - @returns {boolean} (true/false depending on whether location is a country)
 
 #### example
-    covid.get_longs_and_lats("confirmed")
+    covid.check_if_country("Italy")
 
 #### output
 
-    [
-        {state:  "Hubei",  country:  "China",  longitude:  "112.2707 ",  latitude:  "30.9756"}
-        {state:  "",  country:  "Italy",  longitude:  "12.5674 ",  latitude:  "41.8719"}
-        {state:  "",  country:  "Iran",  longitude:  "53.688 ",  latitude:  "32.4279"}
-        {state:  "",  country:  ""Korea South"",  longitude:  "127.7669 ",  latitude:  "35.9078"}
-    ...
+    true
+
+### check_if_region
+#### parameters
+ - @param {string} **country_or_region** (choose *country_or_region*)
+
+#### returns
+ - @returns {boolean} (true/false depending on whether location is a region)
+
+#### example
+    covid.check_if_region("Canada")
+
+#### output
+
+    false
+
+### get_country_flag
+#### parameters
+ - @param {string} **location** (choose *location*)
+
+#### returns
+ - @returns {string} (image URL of country or region flag)
+
+#### example
+    covid.get_country_flag("Bulgaria")
+
+#### output
+
+    "https://collaboratescience.com/corona/flags/bg.png"
 
 ## Support
 Reach out to [Sean McClure](https://twitter.com/sean_a_mcclure) if you need assistance or would like to see additional useful functions added to this library.
 
 ## Data Issues
-Unfortunately the [data source](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE** undergoes constant [revisions](https://github.com/CSSEGISandData/COVID-19/issues) to its formatting (column names, state formats, etc.). This library does its best to stay on top of these changes. If you encounter an issue with the consistency of results returned by the methods in this library please raise an issue on this repo.
+Unfortunately the [data source](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE** undergoes constant [revisions](https://github.com/CSSEGISandData/COVID-19/issues) to its formatting (column names, state formats, etc.). This library does its best to stay on top of these changes. Since changing over to the coviddata/covid-api[https://github.com/coviddata/covid-api] repository we expect things to be much more stable. If you encounter an issue with the consistency of results returned by the methods in this library please raise an issue on this repo.
