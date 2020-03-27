@@ -12,6 +12,11 @@ The **covid19.js** library can be used to create *web applications* based off co
 <script src='https://collaboratescience.com/covid19/covid19.min.js'></script>
 ```
 
+### EXAMPLE APPLICATION
+[Corona Application](https://collaboratescience.com/corona/)
+
+![enter image description here](https://collaboratescience.com/corona/corona_app.gif)
+
 ## METHODS & EXAMPLES
 
 ## Reported Data
