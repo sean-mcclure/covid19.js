@@ -1,6 +1,6 @@
 # covid19.js
 
-The **covid19.js** library can be used to create JS applications related to Corona Virus. Data comes from the [repository](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE**. This library ingests the data from coviddata/covid-api[https://github.com/coviddata/covid-api] repository.
+The **covid19.js** library can be used to create *web applications* based off covid19 data. The original data source is the [CSSEGISandData/COVID-19 repository](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE**, and leverages the [coviddata/covid-api](https://github.com/coviddata/covid-api) repository for more reliable data formatting.
 
 ## Include in Your Project
 ```markup
@@ -286,4 +286,4 @@ The **covid19.js** library can be used to create JS applications related to Coro
 Reach out to [Sean McClure](https://twitter.com/sean_a_mcclure) if you need assistance or would like to see additional useful functions added to this library.
 
 ## Data Issues
-Unfortunately the [data source](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE** undergoes constant [revisions](https://github.com/CSSEGISandData/COVID-19/issues) to its formatting (column names, state formats, etc.). This library does its best to stay on top of these changes. Since changing over to the coviddata/covid-api[https://github.com/coviddata/covid-api] repository we expect things to be much more stable. If you encounter an issue with the consistency of results returned by the methods in this library please raise an issue on this repo.
+If you encounter issues with the consistency of results returned by this library please raise an issue on this repo.
