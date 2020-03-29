@@ -18,7 +18,9 @@ The **covid19.js** library can be used to create *web applications* based off co
 ![enter image description here](https://collaboratescience.com/corona/corona_app.gif)
 
 ## CORE OBJECTS
-### You can access the raw data from the following objects:
+#### You can access the raw data from the following objects:
+
+#### object
 
     covid.countries
 
@@ -37,6 +39,8 @@ The **covid19.js** library can be used to create *web applications* based off co
                 cases: 1
                 deaths: 0
                 recoveries: 0
+
+#### object
 
     covid.regions
 
@@ -60,6 +64,8 @@ The **covid19.js** library can be used to create *web applications* based off co
                 cases: 444
                 deaths: 17
                 recoveries: 28
+
+#### object
 
     covid.places
 
