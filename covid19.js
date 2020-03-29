@@ -4,9 +4,9 @@
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 covid = {
     "urls": urls = {
-        "countries": "https://coviddata.github.io/covid-api/v1/countries/stats.json",
-        "regions": "https://coviddata.github.io/covid-api/v1/regions/stats.json",
-        "places": "https://coviddata.github.io/covid-api/v1/places/stats.json"
+        "countries": "https://raw.githubusercontent.com/coviddata/coviddata/master/docs/v1/countries/stats_pretty.json",
+        "regions": "https://raw.githubusercontent.com/coviddata/coviddata/master/docs/v1/regions/stats_pretty.json",
+        "places": "https://raw.githubusercontent.com/coviddata/coviddata/master/docs/v1/places/stats_pretty.json"
     },
     "fetch_data": function fetch_data(key, url) {
         fetch(url).then(response => response.text()).then(data => {
