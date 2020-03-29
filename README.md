@@ -17,6 +17,82 @@ The **covid19.js** library can be used to create *web applications* based off co
 
 ![enter image description here](https://collaboratescience.com/corona/corona_app.gif)
 
+## CORE OBJECTS
+### You can access the raw data from the following objects:
+
+    covid.countries
+
+#### output
+
+    country:
+        key: "united-states"
+        name: "United States"
+    dates:
+        2020-01-22:
+            new:
+                cases: 1
+                deaths: 0
+                recoveries: 0
+            cumulative:
+                cases: 1
+                deaths: 0
+                recoveries: 0
+
+    covid.regions
+
+#### output
+
+    region:
+        key: "hubei-china"
+        name: "Hubei"
+        full_name: "Hubei, China"
+        country:
+            location_type: "country"
+            key: "china"
+            name: "China"
+    dates:
+        2020-01-22:
+            new:
+                cases: 444
+                deaths: 17
+                recoveries: 28
+            cumulative:
+                cases: 444
+                deaths: 17
+                recoveries: 28
+
+    covid.places
+
+#### output
+
+    place:
+        key: "new-york-city-new-york-united-states"
+        name: "New York City"
+        full_name: "New York City, New York, United States"
+        country:
+            location_type: "country"
+            key: "united-states"
+            name: "United States"
+        region:
+            location_type: "region"
+            key: "new-york-united-states"
+            name: "New York"
+            full_name: "New York, United States"
+            country:
+                location_type: "country"
+                key: "united-states"
+                name: "United States"
+    dates:
+        2020-03-01:
+            new:
+                cases: 1
+                deaths: 0
+                recoveries: 0
+            cumulative:
+                cases: 1
+                deaths: 0
+                recoveries: 0
+
 ## METHODS & EXAMPLES
 
 ## Reported Data
