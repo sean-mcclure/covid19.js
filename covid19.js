@@ -6,7 +6,8 @@ covid = {
     "urls": urls = {
         "countries": "https://raw.githubusercontent.com/coviddata/coviddata/master/docs/v1/countries/stats_pretty.json",
         "regions": "https://raw.githubusercontent.com/coviddata/coviddata/master/docs/v1/regions/stats_pretty.json",
-        "places": "https://raw.githubusercontent.com/coviddata/coviddata/master/docs/v1/places/stats_pretty.json"
+        "places": "https://raw.githubusercontent.com/coviddata/coviddata/master/docs/v1/places/stats_pretty.json",
+        "fips": "https://collaboratescience.com/covid19/fips.json"
     },
     "fetch_data": function fetch_data(key, url) {
         fetch(url).then(response => response.text()).then(data => {
@@ -54,13 +55,73 @@ covid = {
         })
         return (res)
     },
-    "get_time_series": function get_time_series(category, type, country_or_region) {
+    "get_time_series_fips": function get_time_series_fips(category = "cumulative", type = "cases", fips = "36061") {
+        var res = []
+        var place = covid.get_place_from_fips(fips)[0].place
+        var province_state = covid.get_place_from_fips(fips)[0]["Province_State"]
+        covid.places.forEach(function(elem) {
+            if (elem.place.name.includes(covid.cap_first_letter(place)) && elem.place.region.name.includes(covid.cap_first_letter(province_state))) {
+                Object.keys(elem.dates).forEach(function(date, i) {
+                    var inner = {}
+                    inner.date = date
+                    inner.value = Object.values(elem.dates)[i][category][type]
+                    res.push(inner)
+                })
+            }
+        })
+        return (res)
+    },
+    "get_time_series": function get_time_series(category, type, location) {
         var res;
-        if (covid.get_all_countries().includes(covid.cap_first_letter(country_or_region))) {
-            res = covid.get_time_series_countries(category, type, country_or_region)
-        } else {
-            res = covid.get_time_series_regions(category, type, country_or_region)
+        if (covid.get_all_countries().includes(covid.cap_first_letter(location))) {
+            res = covid.get_time_series_countries(category, type, location)
         }
+        if (covid.get_all_regions().includes(covid.cap_first_letter(location))) {
+            res = covid.get_time_series_regions(category, type, location)
+        }
+        if (covid.get_all_places().includes(covid.cap_first_letter(location))) {
+            res = covid.get_time_series_places(category, type, location)
+        }
+        return (res)
+    },
+    "get_time_series_multiple": function get_time_series_multiple(category = "cumulative", type = "cases", location_arr = ["Germany", "Italy", "France", "United Kingdom"]) {
+        if (covid.get_all_countries().includes(covid.cap_first_letter(location_arr[0]))) {
+            var all_res_series = {}
+            location_arr.forEach(function(country) {
+                all_res_series[country] = covid.get_time_series(category, type, country)
+            })
+        }
+        if (covid.get_all_regions().includes(covid.cap_first_letter(location_arr[0]))) {
+            var all_res_series = {}
+            location_arr.forEach(function(region) {
+                all_res_series[region] = covid.get_time_series(category, type, region)
+            })
+        }
+        if (covid.get_all_fips().includes(covid.cap_first_letter(location_arr[0]))) {
+            var all_res_series = {}
+            location_arr.forEach(function(fips) {
+                all_res_series[fips] = covid.get_time_series_fips(category, type, fips)
+            })
+        }
+        return (all_res_series)
+    },
+    "get_time_series_multiple_sum": function get_time_series_multiple_sum(category = "cumulative", type = "cases", location_arr = ["Germany", "Italy", "France", "United Kingdom"]) {
+        var totals = {}
+        var keeps = []
+        Object.values(covid.get_time_series_multiple("cumulative", "cases", location_arr)).forEach(function(elem) {
+            elem.forEach(function(obj) {
+                if (!keeps.includes(obj.date)) {
+                    totals[obj.date] = [obj.value]
+                } else {
+                    totals[obj.date].push(obj.value)
+                }
+                keeps.push(obj.date)
+            })
+        })
+        var res = {}
+        Object.values(totals).forEach(function(arr, i) {
+            res[Object.keys(totals)[i]] = arr.reduce((a, b) => a + b, 0)
+        })
         return (res)
     },
     "check_if_country": function check_if_country(country_or_region) {
@@ -92,6 +153,20 @@ covid = {
         var res = []
         covid.regions.forEach(function(elem) {
             res.push(elem.region.name)
+        })
+        return (res)
+    },
+    "get_all_places": function get_all_places() {
+        var res = []
+        covid.places.forEach(function(elem) {
+            res.push(elem.place.name)
+        })
+        return (res)
+    },
+    "get_all_fips": function get_all_fips() {
+        var res = []
+        covid.fips.forEach(function(elem) {
+            res.push(elem["FIPS"])
         })
         return (res)
     },
@@ -152,29 +227,29 @@ covid = {
         return (countries_regions)
     },
     "get_country_from_region": function get_country_from_region(region) {
-          var res = ""
-          covid.get_countries_and_regions().forEach(function(elem) {
-              if(elem.region === covid.cap_first_letter(region)) {
-                  res = elem.country
-              }
-          })
-          return(res)
+        var res = ""
+        covid.get_countries_and_regions().forEach(function(elem) {
+            if (elem.region === covid.cap_first_letter(region)) {
+                res = elem.country
+            }
+        })
+        return (res)
     },
     "get_regions_from_country": function get_regions_from_country(country) {
-          var res = []
-          covid.get_countries_and_regions().forEach(function(elem) {
-              if(elem.country === covid.cap_first_letter(country)) {
-                  res.push(elem.region)
-              }
-          })
-          return(res)
+        var res = []
+        covid.get_countries_and_regions().forEach(function(elem) {
+            if (elem.country === covid.cap_first_letter(country)) {
+                res.push(elem.region)
+            }
+        })
+        return (res)
     },
-    "check_if_country_has_region" : function check_if_country_has_region(country) {
+    "check_if_country_has_region": function check_if_country_has_region(country) {
         var res = false
-        if(covid.get_regions_from_country(country).length > 0) {
+        if (covid.get_regions_from_country(country).length > 0) {
             res = true
         }
-        return(res)
+        return (res)
     },
     "find_code_by_country": function find_code_by_country(country) {
         var res = false
@@ -195,18 +270,44 @@ covid = {
         })
         return (res)
     },
-    "get_flag_url" : function get_flag_url(country_code) {
+    "get_flag_url": function get_flag_url(country_code) {
         var url = "https://collaboratescience.com/corona/flags/" + country_code + ".png"
         return (url)
     },
     "get_country_flag": function get_country_flag(location) {
-        if(covid.check_if_country(covid.cap_first_letter(location))) {
+        if (covid.check_if_country(covid.cap_first_letter(location))) {
             var country_code = covid.find_code_by_country(covid.cap_first_letter(location)).toLowerCase()
         } else {
             var country_code = covid.find_code_by_region(covid.cap_first_letter(location)).toLowerCase()
         }
         var res = covid.get_flag_url(country_code)
-        return(res)
+        return (res)
+    },
+    "get_fips_from_place": function get_fips_from_place(place) {
+        var res = []
+        covid.fips.forEach(function(elem) {
+            if (elem["Admin2"] === covid.cap_first_letter(place)) {
+                var inner = {}
+                inner["FIPS"] = elem["FIPS"]
+                inner["Province_State"] = elem["Province_State"]
+                res.push(inner)
+            }
+        })
+        return (res)
+    },
+    "get_place_from_fips": function get_place_from_fips(fips) {
+        var res = []
+        covid.fips.forEach(function(elem) {
+            if (elem["FIPS"] === fips) {
+                var inner = {}
+                inner["FIPS"] = elem["FIPS"]
+                inner["place"] = elem["Admin2"]
+                inner["Province_State"] = elem["Province_State"]
+                inner["Country_Region"] = elem["Country_Region"]
+                res.push(inner)
+            }
+        })
+        return (res)
     },
     "country_codes": country_codes = [{
         "Country": "Afghanistan",

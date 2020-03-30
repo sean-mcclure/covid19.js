@@ -133,7 +133,7 @@ The **covid19.js** library can be used to create *web applications* based off co
 #### parameters
  - @param {string} **category** (choose between *cumulative* and *new*)
  - @param {string} **type** (choose between *cases*, *deaths*, and *recoveries*)
- - @param {string} **country_or_region** (choose *country_or_region*)
+ - @param {string} **location** (choose *country*, *region*, or *fips*)
 
 #### returns
  - @returns {object} (time series object for chosen location)
@@ -152,6 +152,50 @@ The **covid19.js** library can be used to create *web applications* based off co
         {date: "2020-03-25", value: 2998},
         {date: "2020-03-26", value: 3899}
     ]
+
+### get_time_series_multiple
+#### parameters
+ - @param {string} **category** (choose between *cumulative* and *new*)
+ - @param {string} **type** (choose between *cases*, *deaths*, and *recoveries*)
+ - @param {string} **location_arr** (an array of *countries*, *regions*, or *fips*)
+
+#### returns
+ - @returns {object} (time series object of all time series for chosen locations)
+
+#### example
+    covid.get_time_series_multiple("cumulative", "cases", ["Germany", "Italy", "France", "United Kingdom"])
+
+#### output
+
+    {
+        Germany: (62) [{…}, {…}, {…}, {…}, ...
+        Italy: (59) [{…}, {…}, {…}, {…}, ...
+        France: (66) [{…}, {…}, {…}, {…}, ...
+        United Kingdom: (59) [{…}, {…}, {…}, {…}, ....
+    }
+
+### get_time_series_multiple_sum
+#### parameters
+ - @param {string} **category** (choose between *cumulative* and *new*)
+ - @param {string} **type** (choose between *cases*, *deaths*, and *recoveries*)
+ - @param {string} **location_arr** (an array of *countries*, *regions*, or *fips*)
+
+#### returns
+ - @returns {object} (time series object with summed time series for locations chosen)
+
+#### example
+    covid.get_time_series_multiple_sum("cumulative", "cases", ["Germany", "Italy", "France", "United Kingdom"])
+
+#### output
+
+    {
+        2020-01-28: 8,
+        2020-01-29: 9,
+        2020-01-30: 9,
+        2020-01-31: 14,
+        2020-02-01: 18,
+        ...
+    }
 
 ## Utility Methods
 
@@ -195,6 +239,79 @@ The **covid19.js** library can be used to create *web applications* based off co
         "Georgia"
         ...
     ]
+
+### get_all_places
+
+#### returns
+ - @returns {array} (all places listed in data)
+
+#### example
+    covid.get_all_places()
+
+#### output
+    [
+        "New York City",
+        "Westchester",
+        "Nassau",
+        "Suffolk","
+        ...
+    ]
+
+### get_all_fips
+
+#### returns
+ - @returns {array} (all fips listed in data)
+
+#### example
+    covid.get_all_fips()
+
+#### output
+    [
+        "45001",
+        "22001",
+        "51001",
+        "16001",
+        "19001",
+        ...
+    ]
+
+### get_fips_from_place
+
+#### parameters
+ - @param {string} **place** (choose *place*)
+
+#### returns
+ - @returns {array with object} (fips associated with place)
+
+#### example
+    covid.get_fips_from_place("New York City")
+
+#### output
+
+    [{
+       FIPS: "36061",
+       Province_State: "New York"
+    }]
+
+### get_place_from_fips
+
+#### parameters
+ - @param {string} **fips** (choose *fips*)
+
+#### returns
+ - @returns {array with object} (place details associated with fips)
+
+#### example
+    covid.get_place_from_fips("48027")
+
+#### output
+
+    [{
+        FIPS: "48027",
+        place: "Bell",
+        Province_State: "Texas",
+        Country_Region: "US"
+    }]
 
 ### check_if_country_has_region
 #### parameters
