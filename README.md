@@ -17,6 +17,20 @@ The **covid19.js** library can be used to create *web applications* based off co
 
 ![enter image description here](https://collaboratescience.com/corona/corona_app.gif)
 
+## READY STATE
+#### There is a ~1 second delay before all required files are loaded to run covid19.js. To ensure your application does not call a method that is unavailable you can check the library's ready state like this:
+
+    covid.is_ready = true
+
+#### example (using Azle.js)
+
+    az.call_once_satisfied({
+        "condition" : "covid.is_ready",
+        "function" : function() {
+            az.load_scripts([scripts/prepare.js", "scripts/responsive.js", "scripts/visuals.js"]) // load your application's scripts here
+        }
+    })
+
 ## CORE OBJECTS
 #### You can access the raw data from the following objects:
 
