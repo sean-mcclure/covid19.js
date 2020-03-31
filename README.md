@@ -500,6 +500,26 @@ The **covid19.js** library can be used to create *web applications* based off co
 
     "https://collaboratescience.com/corona/flags/bg.png"
 
+## Modeling
+
+### run_sir_model
+#### parameters
+ - @param {float} **beta** (choose *rate of infection*)
+ - @param {float} **gamma** (choose *rate of recovery*)
+
+#### returns
+ - @returns {array} (plottable x and y values for all 3 compartments (susceptible, infectious and recovered/removed))
+
+#### example
+    covid.run_sir_model(0.1, 0.05)
+
+#### output
+    [
+        {name: "S", x: Array(2001), y: Array(2001)},
+        {name: "I", x: Array(2001), y: Array(2001)},
+        {name: "R", x: Array(2001), y: Array(2001)}
+    ]
+
 ## Support
 Reach out to [Sean McClure](https://twitter.com/sean_a_mcclure) if you need assistance or would like to see additional useful functions added to this library.
 

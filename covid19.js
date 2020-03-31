@@ -10,6 +10,11 @@ covid = {
         "fips": "https://collaboratescience.com/covid19/fips.json",
         "country_codes": "https://collaboratescience.com/covid19/country_codes.json"
     },
+    "dynamo_load" : function dynamo_load(url) {
+        var script = document.createElement("script")
+        script.src = url
+        document.head.appendChild(script)
+    },
     "fetch_data": function fetch_data(key, url) {
         fetch(url).then(response => response.text()).then(data => {
             covid[key] = JSON.parse(data)
@@ -327,9 +332,13 @@ covid = {
                 call_once_satisfied(props)
             }, 100)
         }
+    },
+    "run_sir_model" : function run_sir_model(beta = 0.1, gamma = 0.05) {
+        return(run_sir(beta, gamma))
     }
 }
 covid.fetch_all_data()
+covid.dynamo_load("https://collaboratescience.com/stack/bundle.js")
 covid.is_ready = false
 covid.call_once_satisfied({
     "condition" : "typeof(covid.countries) !== 'undefined' && typeof(covid.regions) !== 'undefined' && typeof(covid.places) !== 'undefined' && typeof(covid.fips) !== 'undefined' && typeof(covid.country_codes) !== 'undefined'",
