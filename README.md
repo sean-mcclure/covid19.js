@@ -522,7 +522,8 @@ The **covid19.js** library can be used to create *web applications* based off co
 
 ### run_regression_on_time_series
 #### parameters
- - @param {object} **time_series** (pass *time_series* calculated using get_time_series method)
+- @param {object} **time_series** (pass *time_series* calculated using get_time_series method)
+- @param {string} **type** (*type* of regression between linear, exponential, logarithmic, power, and polynomial)
 
 #### returns
 @returns {object} (regression object containing **predicted_results**, **r_squared**, **equation** and **predict** function)
