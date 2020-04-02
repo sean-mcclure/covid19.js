@@ -336,7 +336,7 @@ covid = {
     "run_sir_model" : function run_sir_model(beta = 0.1, gamma = 0.05) {
         return(run_sir(beta, gamma))
     },
-    "run_regression_on_time_series" : function run_regression_on_time_series(time_series) {
+    "run_regression_on_time_series" : function run_regression_on_time_series(time_series, type) {
         var res = {}
         var data_prepped_for_regression = []
         time_series.forEach(function(elem, i) {
@@ -345,7 +345,21 @@ covid = {
             inner.push(elem.value)
             data_prepped_for_regression.push(inner)
         })
-        regression_results = methods.linear(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        if(type === "linear") {
+            regression_results = methods.linear(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        }
+        if(type === "exponential") {
+            regression_results = methods.exponential(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        }
+        if(type === "logarithmic") {
+            regression_results = methods.logarithmic(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        }
+        if(type === "power") {
+            regression_results = methods.power(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        }
+        if(type === "polynomial") {
+            regression_results = methods.polynomial(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        }
         var predicted_results = []
         regression_results.points.forEach(function(arr) {
             var inner_f = {}
