@@ -520,6 +520,37 @@ The **covid19.js** library can be used to create *web applications* based off co
         {name: "R", x: Array(2001), y: Array(2001)}
     ]
 
+### run_regression_on_time_series
+#### parameters
+ - @param {object} **time_series** (pass *time_series* calculated using get_time_series method)
+
+#### returns
+ - @returns {object} (regression object containing *predicted_results*, *r_squared*, *equation* and *predict* function)
+ - - *predicted_results*: plottable x (index) and y (predicted) values presented in same format as results from get_time_series method)
+ - - *r_squared*: coefficient of determination (proportion of variance explained by independent variables)
+ - - *equation*: string representation of linear equation with slope and intercept
+ - - *predict* function: a function that can be used to predict a new value
+
+#### example
+    var my_series = covid.get_time_series("cumulative", "cases", "Canada")
+    var reg_results = covid.run_regression_on_time_series(my_series)
+
+#### output
+    {
+        predicted_results : [
+                                ...
+                                {index: 61, value: 2879.86},
+                                {index: 62, value: 2949.76},
+                                {index: 63, value: 3019.66},
+                                {index: 64, value: 3089.56},
+                                {index: 65, value: 3159.46},
+                                {index: 66, value: 3229.36}
+                            ],
+        r_squared : 0.41,
+        equation : "y = 69.9x + -1384.04",
+        predict : x => {…}
+    }
+
 ## Support
 Reach out to [Sean McClure](https://twitter.com/sean_a_mcclure) if you need assistance or would like to see additional useful functions added to this library.
 

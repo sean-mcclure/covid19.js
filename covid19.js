@@ -335,10 +335,34 @@ covid = {
     },
     "run_sir_model" : function run_sir_model(beta = 0.1, gamma = 0.05) {
         return(run_sir(beta, gamma))
+    },
+    "run_regression_on_time_series" : function run_regression_on_time_series(time_series) {
+        var res = {}
+        var data_prepped_for_regression = []
+        time_series.forEach(function(elem, i) {
+            var inner = []
+            inner.push(i)
+            inner.push(elem.value)
+            data_prepped_for_regression.push(inner)
+        })
+        regression_results = methods.linear(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        var predicted_results = []
+        regression_results.points.forEach(function(arr) {
+            var inner_f = {}
+            inner_f.index = arr[0]
+            inner_f.value = arr[1]
+            predicted_results.push(inner_f)
+        })
+        res.predicted_results = predicted_results
+        res.r_squared = regression_results.r2
+        res.equation = regression_results.string
+        res.predict = regression_results.predict
+    return(res)
     }
 }
 covid.fetch_all_data()
-covid.dynamo_load("https://collaboratescience.com/stack/bundle.js")
+covid.dynamo_load("https://collaboratescience.com/covid19/sir_bundle.js")
+covid.dynamo_load("https://collaboratescience.com/covid19/regression_bundle.js")
 covid.is_ready = false
 covid.call_once_satisfied({
     "condition" : "typeof(covid.countries) !== 'undefined' && typeof(covid.regions) !== 'undefined' && typeof(covid.places) !== 'undefined' && typeof(covid.fips) !== 'undefined' && typeof(covid.country_codes) !== 'undefined'",
