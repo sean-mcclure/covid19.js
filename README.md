@@ -529,7 +529,7 @@ The **covid19.js** library can be used to create *web applications* based off co
 @returns {object} (regression object containing **predicted_results**, **r_squared**, **equation** and **predict** function)
 - **predicted_results**: plottable x (index) and y (predicted) values presented in same format as results from get_time_series method)
 - **r_squared**: coefficient of determination (proportion of variance explained by independent variables)
-- **equation**: string representation of linear equation with slope and intercept
+- **equation**: string representation of equation with solved parameters
 - **predict** function: a function that can be used to predict a new value
 
 #### example
