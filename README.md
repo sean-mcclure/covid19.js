@@ -534,7 +534,7 @@ The **covid19.js** library can be used to create *web applications* based off co
 
 #### example
     var my_series = covid.get_time_series("cumulative", "cases", "Canada")
-    var reg_results = covid.run_regression_on_time_series(my_series)
+    var reg_results = covid.run_regression_on_time_series(my_series, "exponential")
 
 #### output
     {
@@ -547,8 +547,8 @@ The **covid19.js** library can be used to create *web applications* based off co
                                 {index: 65, value: 3159.46},
                                 {index: 66, value: 3229.36}
                             ],
-        r_squared : 0.41,
-        equation : "y = 69.9x + -1384.04",
+        r_squared : 0.87,
+        equation : "y = 0.05e^(0.19x)",
         predict : x => {…}
     }
 
