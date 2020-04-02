@@ -553,9 +553,9 @@ The **covid19.js** library can be used to create *web applications* based off co
 
 #### predict example
 
-    reg_results.predict(42)
+    reg_results.predict(70)
 
-    [42, 1551.76]
+    [70, 3508.96]
 
 ## Support
 Reach out to [Sean McClure](https://twitter.com/sean_a_mcclure) if you need assistance or would like to see additional useful functions added to this library.
