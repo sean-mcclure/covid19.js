@@ -525,11 +525,11 @@ The **covid19.js** library can be used to create *web applications* based off co
  - @param {object} **time_series** (pass *time_series* calculated using get_time_series method)
 
 #### returns
- - @returns {object} (regression object containing *predicted_results*, *r_squared*, *equation* and *predict* function)
- - - *predicted_results*: plottable x (index) and y (predicted) values presented in same format as results from get_time_series method)
- - - *r_squared*: coefficient of determination (proportion of variance explained by independent variables)
- - - *equation*: string representation of linear equation with slope and intercept
- - - *predict* function: a function that can be used to predict a new value
+@returns {object} (regression object containing *predicted_results*, *r_squared*, *equation* and *predict* function)
+- - *predicted_results*: plottable x (index) and y (predicted) values presented in same format as results from get_time_series method)
+- - *r_squared*: coefficient of determination (proportion of variance explained by independent variables)
+- - *equation*: string representation of linear equation with slope and intercept
+- - *predict* function: a function that can be used to predict a new value
 
 #### example
     var my_series = covid.get_time_series("cumulative", "cases", "Canada")
