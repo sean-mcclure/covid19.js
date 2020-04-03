@@ -2,6 +2,8 @@
 
 The **covid19.js** library can be used to create *web applications* based off covid19 data. The original data source is the [CSSEGISandData/COVID-19 repository](https://github.com/CSSEGISandData/COVID-19) by **Johns Hopkins CSSE**, and leverages the [coviddata/coviddata](https://github.com/coviddata/covid-api) repository for more reliable data formatting.
 
+**DISCLAIMER**: This library should only be used for personal projects. If you decide to publish results based on data fetched, or models used, in this library you are accountable for the correctness of any and all results.
+
 ## Include in Your Project
 ```markup
 <script src="covid19.min.js"></script>
