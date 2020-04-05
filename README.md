@@ -22,7 +22,7 @@ The **covid19.js** library can be used to create *web applications* based off co
 ## READY STATE
 #### There is a ~1 second delay before all required files are loaded to run covid19.js. To ensure your application does not call a method that is unavailable you can check the library's ready state like this:
 
-    covid.is_ready = true
+    covid.is_ready == true
 
 #### example (using Azle.js)
 
