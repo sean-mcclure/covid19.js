@@ -17,7 +17,7 @@ The **covid19.js** library can be used to create *web applications* based off co
 ### EXAMPLE APPLICATION
 [Corona Application](https://collaboratescience.com/corona/)
 
-![enter image description here](https://collaboratescience.com/corona/corona_app.gif)
+![enter image description here](https://collaboratescience.com/covid19/corona_app.gif)
 
 ## READY STATE
 #### There is a ~1 second delay before all required files are loaded to run covid19.js. To ensure your application does not call a method that is unavailable you can check the library's ready state like this:
