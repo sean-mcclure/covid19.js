@@ -10,7 +10,7 @@ covid = {
         "fips": "https://collaboratescience.com/covid19/fips.json",
         "country_codes": "https://collaboratescience.com/covid19/country_codes.json"
     },
-    "dynamo_load" : function dynamo_load(url) {
+    "dynamo_load": function dynamo_load(url) {
         var script = document.createElement("script")
         script.src = url
         document.head.appendChild(script)
@@ -32,6 +32,25 @@ covid = {
             res.push(elem.charAt(0).toUpperCase() + elem.substring(1))
         })
         return (res.join(" "))
+    },
+    "dynamic_sort": function dynamic_sort(property, sort_order) {
+        if (typeof(sort_order) === "undefined") {
+            var sortOrder = -1
+        }
+        if (sort_order === "ascending") {
+            var sortOrder = 1;
+        }
+        if (sort_order === "descending") {
+            var sortOrder = -1;
+        }
+        if (property[0] === "-") {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+        return function(a, b) {
+            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+            return result * sortOrder;
+        }
     },
     "get_time_series_countries": function get_time_series_countries(category = "cumulative", type = "cases", country = "Canada") {
         var res = []
@@ -181,10 +200,10 @@ covid = {
         var types = ["cases", "deaths", "recoveries"]
         types.forEach(function(type) {
             var temp_vals = []
-            if(typeof(covid.get_time_series("new", type, location)) !== "undefined") {
-            covid.get_time_series("new", type, location).forEach(function(elem) {
-                temp_vals.push(elem.value)
-            })
+            if (typeof(covid.get_time_series("new", type, location)) !== "undefined") {
+                covid.get_time_series("new", type, location).forEach(function(elem) {
+                    temp_vals.push(elem.value)
+                })
             }
             totals[type] = temp_vals.reduce((a, b) => a + b, 0)
         })
@@ -211,6 +230,16 @@ covid = {
         final.deaths = total_deaths
         final.recoveries = total_recoveries
         return (final)
+    },
+    "sort_reports_by_type": function sort_reports_by_type(type, sort_order) {
+        var temp = []
+        covid.get_all_countries().forEach(function(country) {
+            this_report = covid.get_location_report(country)
+            this_report.location = country
+            temp.push(this_report)
+        })
+        var all_sorted = Object.values(temp).sort(covid.dynamic_sort(type, sort_order))
+        return (all_sorted)
     },
     "check_if_location_in_data": function check_if_location_in_data(location) {
         res = false
@@ -333,10 +362,10 @@ covid = {
             }, 100)
         }
     },
-    "run_sir_model" : function run_sir_model(beta = 0.1, gamma = 0.05) {
-        return(run_sir(beta, gamma))
+    "run_sir_model": function run_sir_model(beta = 0.1, gamma = 0.05) {
+        return (run_sir(beta, gamma))
     },
-    "run_regression_on_time_series" : function run_regression_on_time_series(time_series, type) {
+    "run_regression_on_time_series": function run_regression_on_time_series(time_series, type) {
         var res = {}
         var data_prepped_for_regression = []
         time_series.forEach(function(elem, i) {
@@ -345,20 +374,40 @@ covid = {
             inner.push(elem.value)
             data_prepped_for_regression.push(inner)
         })
-        if(type === "linear") {
-            regression_results = methods.linear(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        if (type === "linear") {
+            regression_results = methods.linear(data_prepped_for_regression, {
+                order: 2,
+                precision: 2,
+                period: null
+            });
         }
-        if(type === "exponential") {
-            regression_results = methods.exponential(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        if (type === "exponential") {
+            regression_results = methods.exponential(data_prepped_for_regression, {
+                order: 2,
+                precision: 2,
+                period: null
+            });
         }
-        if(type === "logarithmic") {
-            regression_results = methods.logarithmic(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        if (type === "logarithmic") {
+            regression_results = methods.logarithmic(data_prepped_for_regression, {
+                order: 2,
+                precision: 2,
+                period: null
+            });
         }
-        if(type === "power") {
-            regression_results = methods.power(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        if (type === "power") {
+            regression_results = methods.power(data_prepped_for_regression, {
+                order: 2,
+                precision: 2,
+                period: null
+            });
         }
-        if(type === "polynomial") {
-            regression_results = methods.polynomial(data_prepped_for_regression, { order: 2, precision: 2, period: null });
+        if (type === "polynomial") {
+            regression_results = methods.polynomial(data_prepped_for_regression, {
+                order: 2,
+                precision: 2,
+                period: null
+            });
         }
         var predicted_results = []
         regression_results.points.forEach(function(arr) {
@@ -371,7 +420,7 @@ covid = {
         res.r_squared = regression_results.r2
         res.equation = regression_results.string
         res.predict = regression_results.predict
-    return(res)
+        return (res)
     }
 }
 covid.fetch_all_data()
@@ -379,8 +428,8 @@ covid.dynamo_load("https://collaboratescience.com/covid19/sir_bundle.js")
 covid.dynamo_load("https://collaboratescience.com/covid19/regression_bundle.js")
 covid.is_ready = false
 covid.call_once_satisfied({
-    "condition" : "typeof(covid.countries) !== 'undefined' && typeof(covid.regions) !== 'undefined' && typeof(covid.places) !== 'undefined' && typeof(covid.fips) !== 'undefined' && typeof(covid.country_codes) !== 'undefined'",
-    "function" : function() {
-         covid.is_ready = true
+    "condition": "typeof(covid.countries) !== 'undefined' && typeof(covid.regions) !== 'undefined' && typeof(covid.places) !== 'undefined' && typeof(covid.fips) !== 'undefined' && typeof(covid.country_codes) !== 'undefined'",
+    "function": function() {
+        covid.is_ready = true
     }
 })

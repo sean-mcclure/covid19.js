@@ -213,6 +213,28 @@ The **covid19.js** library can be used to create *web applications* based off co
         ...
     }
 
+### sort_reports_by_type
+#### parameters
+- @param {string} **type** (sort by *cases*, *deaths*, or *recoveries*)
+- @param {string} **sort_order** (choose between *descending (this is default)*, *ascending*)
+
+#### returns
+ - @returns {array of objects} (array of objects sorted by chosen type and sort order)
+
+#### example
+    covid.sort_reports_by_type("deaths", "descending")
+
+#### output
+
+    [
+        {cases: 143626, deaths: 18279, recoveries: 28471, location: "Italy"},
+        {cases: 461437, deaths: 16478, recoveries: 25581, location: "United States"},
+        {cases: 153222, deaths: 15447, recoveries: 52165, location: "Spain"},
+        {cases: 118781, deaths: 12228, recoveries: 23413, location: "France"},
+        {cases: 65872, deaths: 7993, recoveries: 359, location: "United Kingdom"}
+        ...
+    ]
+
 ## Utility Methods
 
 ### get_all_countries
