@@ -505,6 +505,7 @@ The **covid19.js** library can be used to create *web applications* based off co
     covid.check_if_location_in_data("Los Angeles")
 
 #### output
+    false
 
 ### check_if_country
 #### parameters
