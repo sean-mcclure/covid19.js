@@ -149,6 +149,19 @@ covid = {
         })
         return (res)
     },
+    "get_all_growth_rates_country": function get_all_growth_rates_country(category, type) {
+        var res = {}
+        covid.get_all_countries().forEach(function(country) {
+            var my_series = covid.get_time_series(category, type, country)
+            var reg_results = covid.run_regression_on_time_series(my_series, "exponential")
+            var regExp = /\(([^)]+)\)/;
+            var growth_rate = Number(regExp.exec(reg_results.equation)[1].replace("x", ""))
+            if (!isNaN(growth_rate)) {
+                res[country] = growth_rate
+            }
+        })
+        return (covid.sort_object(res))
+    },
     "check_if_country": function check_if_country(country_or_region) {
         var res = false
         if (covid.get_all_countries().includes(country_or_region)) {
@@ -249,6 +262,21 @@ covid = {
             res = false
         }
         return (res)
+    },
+    "sort_object": function sort_object(obj) {
+        items = Object.keys(obj).map(function(key) {
+            return [key, obj[key]];
+        });
+        items.sort(function(first, second) {
+            return second[1] - first[1];
+        });
+        sorted_obj = {}
+        Object.keys(items).forEach(function(elem, i) {
+            use_key = Object.values(items)[i][0]
+            use_value = Object.values(items)[i][1]
+            sorted_obj[use_key] = use_value
+        })
+        return (sorted_obj)
     },
     "get_available_dates": function get_available_dates() {
         return (Object.keys(covid.countries[0].dates))
@@ -368,12 +396,14 @@ covid = {
     "run_regression_on_time_series": function run_regression_on_time_series(time_series, type) {
         var res = {}
         var data_prepped_for_regression = []
-        time_series.forEach(function(elem, i) {
-            var inner = []
-            inner.push(i)
-            inner.push(elem.value)
-            data_prepped_for_regression.push(inner)
-        })
+        if (typeof(time_series) !== "undefined") {
+            time_series.forEach(function(elem, i) {
+                var inner = []
+                inner.push(i)
+                inner.push(elem.value)
+                data_prepped_for_regression.push(inner)
+            })
+        }
         if (type === "linear") {
             regression_results = methods.linear(data_prepped_for_regression, {
                 order: 2,

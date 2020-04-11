@@ -235,6 +235,30 @@ The **covid19.js** library can be used to create *web applications* based off co
         ...
     ]
 
+### get_all_growth_rates_country
+#### parameters
+- @param {string} **category** (choose between *cumulative* and *new*)
+- @param {string} **type** (choose between *cases*, *deaths*, and *recoveries*)
+
+#### returns
+ - @returns {object} (object sorted by growth rate by country (assumes exponential growth))
+
+#### example
+    covid.get_all_growth_rates_country("cumulative", "cases")
+
+#### output
+
+    {
+        South Sudan: 0.29,
+        Niger: 0.24,
+        Guinea: 0.21,
+        Djibouti: 0.19,
+        Russia: 0.18,
+        Belarus: 0.18,
+        Guinea-Bissau: 0.18
+        ...
+    }
+
 ## Utility Methods
 
 ### get_all_countries
